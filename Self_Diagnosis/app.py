@@ -5,12 +5,12 @@ import joblib
 st.set_page_config(
     page_icon="logo.jpeg",
     page_title="Self Diagnosis",
-    layout="wide"
+    
 )
 
 # Sidebar navigation
 st.sidebar.title("PAGE NAVIGATION")
-selected_page = st.sidebar.radio("PAGES", ["Children Prediction", "Adult Prediction"])
+selected_page = st.sidebar.radio("SELECT PAGE", ["Dashboard","Children Prediction", "Adult Prediction"])
 
 # Load models and vectorizers for both children and adults
 children_model = joblib.load('infant_sickness_model.pkl')
@@ -178,7 +178,27 @@ def predict_sickness(model, vectorizer, symptoms, category):
     return sickness, prescription, causes, related_symptoms
 
 # Display corresponding page content
-if selected_page == "Children Prediction":
+
+
+if selected_page =='Dashboard':
+    st.title('SELF MEDICAL DIAGNOSIS')
+    st.write('''
+                 This app offers you a quick self medical diagnosis at your comfort.
+                 Note, you still need a professional advice from a doctor. this app
+                 serves as an emergency diagnosis for a first aid treatment.
+                 this app also serve as a preventive measures, to arrest issues before it becomes too late( early diagnosis)
+                 ''')
+    st.header('Chose a page to make your prediction')
+    st.subheader('Input atleast 3 symptoms, separated with a comma')
+    st.image('testoscope.jpeg', width=500)
+ 
+
+
+
+
+
+
+elif selected_page == "Children Prediction":
     st.title("Infant Sickness Prediction App")
     st.write("Enter the symptoms of the infant to get a diagnosis, prescription, possible causes, and related symptoms.")
     st.image("bg-removebg-preview.png", width=300)
@@ -206,7 +226,7 @@ if selected_page == "Children Prediction":
 elif selected_page == "Adult Prediction":
     st.title("Adult Sickness Diagnosis App")
     st.write("Enter your symptoms to get a diagnosis, prescription, possible causes, and related symptoms.")
-    st.image("testoscope.jpeg", width=200)
+    st.image("adult.png", width=250)
 
     # Get possible symptoms from vectorizer
     all_symptoms = adult_vectorizer.get_feature_names_out()
@@ -227,3 +247,8 @@ elif selected_page == "Adult Prediction":
             st.write(f"Related Symptoms: {related_symptoms}")
         else:
             st.error("Please enter symptoms.")
+            
+            
+        if __name__=='main':
+            st.run()
+
